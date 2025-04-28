@@ -1,9 +1,22 @@
-.mainHeaderContainer{
-    background-color:#141414;
-    width: 100vw;
-    height: 5vh;
-    
+.mainHeaderContainer {
+    background: rgba(20, 20, 20, 0.8);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    padding: 0 2rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
-.img{
-    height: 5vh;
+
+.img {
+    height: 40px;
+    transition: transform 0.2s ease-in-out;
+}
+
+.img:hover {
+    transform: scale(1.05);
 }

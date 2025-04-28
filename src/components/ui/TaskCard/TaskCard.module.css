@@ -1,21 +1,110 @@
-.mainContainer{
+.mainContainer {
     width: 100%;
-    height: 10vh;
+    min-height: 80px;
+    background: rgba(26, 26, 25, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
     display: flex;
     flex-direction: row;
-}
-.leftDataContainer{
-    gap: .7rem;
-    display: flex;
-    flex-direction: row;
+    justify-content: space-between;
     align-items: center;
-}
-.rightDataContainer{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease-in-out;
 }
 
-.rightDataContainer :hover{
+.mainContainer:hover {
+    transform: translateX(4px);
+    background: rgba(26, 26, 25, 0.9);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.leftDataContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    flex: 1;
+    overflow: hidden;
+}
+
+.leftDataContainer p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.rightDataContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: 1rem;
+    flex-shrink: 0;
+}
+
+.rightDataContainer div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rightDataContainer button {
+    width: 32px;
+    height: 32px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.2s ease-in-out;
+    padding: 0;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
+}
+
+.rightDataContainer button:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    transform: scale(1.1);
+}
+
+.rightDataContainer button span {
+    font-size: 20px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sprintSelector {
+    padding: 0.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    background-color: rgba(26, 26, 25, 0.8);
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9rem;
+    min-width: 120px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+
+.sprintSelector:hover {
+    background: rgba(26, 26, 25, 0.9);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.sprintSelector:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.sprintSelector option {
+    background-color: #1A1A19;
+    color: rgba(255, 255, 255, 0.9);
 }

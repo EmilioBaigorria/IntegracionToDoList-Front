@@ -1,19 +1,70 @@
-.mainContainer{
-    width: 90%;
-    height: 20vh;
-    background-color: #27445D;
+.mainContainer {
+    width: 95%;
+    min-height: 85px;
+    max-height: 85px;
+    background: rgba(39, 68, 93, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
     display: flex;
     flex-direction: column;
+    padding: 0.5rem;
+    gap: 0.4rem;
+    transition: all 0.2s ease-in-out;
+    backdrop-filter: blur(10px);
+    margin: 0 auto;
 }
-.navButton{
-    background-color: none;
+
+.mainContainer:hover {
+    transform: translateY(-2px);
+    background: rgba(39, 68, 93, 0.4);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
-.mainContainer_sprintInfoContainer{
+
+.navButton {
+    background: transparent;
+    border: none;
+    color: white;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+    font-size: 0.85rem;
+}
+
+.navButton:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.mainContainer_sprintInfoContainer {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.15rem 0;
 }
-.mainContainer_buttonContainer{
+
+.mainContainer_sprintInfoContainer p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.mainContainer_buttonContainer {
     display: flex;
     flex-direction: row;
+    gap: 0.3rem;
+    justify-content: flex-end;
+}
+
+.mainContainer_buttonContainer button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    padding: 0.15rem 0.35rem;
+    color: white;
+    font-size: 0.8rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.mainContainer_buttonContainer button:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
 }

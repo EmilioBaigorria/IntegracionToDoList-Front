@@ -1,15 +1,52 @@
-.button{
-    justify-content: space-around;
+.button {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    border: .1px solid white;
-    background-color: #27445D;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: transparent;
+    border-radius: 4px;
+    padding: 0.4rem 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    line-height: 1;
+}
 
+.button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
 }
-.button:hover{
-    color: #27445D;
-    border: .1px solid #27445D;
-    background-color: white;
+
+.button:active {
+    transform: scale(0.95);
 }
-.button:hover span{
-    color: #27445D;
+
+.button span {
+    color: rgba(255, 255, 255, 0.7);
+    transition: all 0.2s ease-in-out;
+    display: flex;
+    align-items: center;
+}
+
+.button:hover span {
+    color: rgba(255, 255, 255, 1);
+}
+
+/* Estilo específico para el botón de Backlog */
+.button.backlog {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.button.backlog:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* Estilo específico para el botón de Crear Sprint */
+.button.create {
+    background: rgba(39, 68, 93, 0.8);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.button.create:hover {
+    background: rgba(39, 68, 93, 1);
 }

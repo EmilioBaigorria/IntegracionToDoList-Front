@@ -1,20 +1,59 @@
 .mainContainer{
-    width: 20vw;
-    height: 100%;
-    padding: .4rem;
-    background-color: #4B567A;
+    /* width: 20vw; // Quitamos ancho fijo */
+    width: 100%; /* Ocupa el ancho de la columna */
+    /* height: 100%; // La altura debe ser automática */
+    min-height: 80px; /* Una altura mínima como en TaskCard */
+
+    /* background-color: #4B567A; // Quitamos el azul */
+    background: rgba(255, 255, 255, 0.05); /* Mismo fondo que TaskCard */
+    border: 1px solid rgba(255, 255, 255, 0.1); /* Mismo borde que TaskCard */
+    border-radius: 8px; /* Mismo radius que TaskCard */
     display: flex;
     flex-direction: column;
+    padding: 1rem; /* Añadimos padding */
+    box-sizing: border-box;
+    transition: all 0.2s ease-in-out;
 }
+
+.mainContainer:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
 .textContainer{
     display: flex;
     flex-direction: column;
+    gap: 0.25rem; /* Espacio entre textos */
+    margin-bottom: 1rem; /* Espacio antes de botones */
 }
+
+.textContainer p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.9);
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 .buttonsContainer{
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Botones de texto arriba, iconos abajo */
+    gap: 0.75rem; /* Espacio entre las filas de botones */
+    margin-top: auto; /* Empuja botones al fondo de la card */
 }
+
 .buttonsContainer_collection{
     display: flex;
     flex-direction: row;
+    gap: 0.5rem; /* Espacio entre botones de la misma fila */
+    justify-content: flex-end; /* Alinea botones a la derecha */
+}
+
+/* Estilos específicos para botones si son necesarios */
+.buttonsContainer button {
+    /* Podríamos querer botones más pequeños aquí */
+    /* Ejemplo: */
+    /* padding: 0.3rem 0.6rem; */
+    /* font-size: 0.8rem; */
 }

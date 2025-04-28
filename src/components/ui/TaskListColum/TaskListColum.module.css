@@ -1,25 +1,63 @@
 .mainContainer{
-    width: 20vw;
+    /* width: 20vw; // Dejamos que el padre (.columsContainer) defina el ancho */
+    width: 100%; /* Ocupa el espacio asignado por flex */
     height: 100%;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    background-color: #242423 ;
-    border-radius: .2rem;
+    /* align-items: center; // Alineamos contenido al inicio */
+    align-items: stretch; /* Estiramos hijos al ancho completo */
+    background-color: rgba(255, 255, 255, 0.03); /* Fondo muy sutil */
+    border-radius: 8px; /* Bordes redondeados */
+    padding: 1rem; /* Padding interno */
+    box-sizing: border-box;
+    overflow: hidden; /* Ocultamos desbordamiento del contenedor principal */
+}
 
-}
-.tasksContainer{
-    display: flex;
-    flex-direction: column;
-}
+/* Contenedor del título y la lista de tareas */
 .mainContainer_content{
-    background-color: rgb(0, 2, 33);
     height: 100%;
+    width: 100%;
     display: flex;
-    align-items: center;
+    /* align-items: center; // Alineamos al inicio */
     flex-direction: column;
 }
-.taskCoantainer{
+
+/* Estilo para el título de la columna (Pendiente, Activo, Terminado) */
+.mainContainer_content p:first-child {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    flex-shrink: 0; /* Evita que el título se encoja */
+}
+
+/* Contenedor de las TaskCards */
+.tasksContainer{ /* Corregido typo: taskCoantainer -> tasksContainer */
     display: flex;
     flex-direction: column;
+    gap: 0.75rem; /* Espacio entre tarjetas */
+    height: 100%; /* Ocupa el espacio restante */
+    overflow-y: auto; /* Scroll si las tareas exceden */
+    padding-right: 0.5rem; /* Espacio para la barra de scroll */
+    margin-right: -0.5rem; /* Compensación para el padding */
+
+    /* Estilos para la barra de scroll (opcional pero mejora estética) */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
+}
+
+.tasksContainer::-webkit-scrollbar {
+    width: 6px;
+}
+
+.tasksContainer::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.tasksContainer::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 3px;
 }

@@ -1,24 +1,35 @@
 .mainContainer{
-    gap: 2rem;
-    width: 70vw;
-    height: 100%;
+    /* gap: 2rem; // Ajustar si es necesario */
+    /* width: 70vw; // Eliminamos ancho fijo */
+    height: 100%; /* Mantenemos altura */
+    width: 100%; /* Ocupa el ancho del padre */
+    display: flex; /* Añadimos flex para controlar contenido */
+    flex-direction: column; /* Alineamos contenido verticalmente */
 }
 .contentContainer{
     width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
+    flex-grow: 1; /* Permitimos que crezca */
+    overflow: hidden; /* Ocultamos desbordamiento si es necesario */
 }
 .textButtonContainer{
     display: flex;
     flex-direction:row;
     align-items: center;
+    gap: 1rem;
+    flex-shrink: 0; /* Evita que se encoja */
+    padding-bottom: 1rem; /* Espacio antes de las columnas */
+    /* Estilos adicionales para el texto y botón aquí si se necesitan */
 }
 .columsContainer{
-
-    height: 80vh;
-    width: 70vw;
-    gap: 3rem;
+    height: 100%; /* Ocupa la altura restante */
+    /* width: 70vw; // Eliminamos ancho fijo */
+    width: 100%;
+    gap: 1rem; /* Reducimos gap entre columnas */
     display: flex;
     flex-direction: row;
+    flex-grow: 1; /* Aseguramos que use el espacio */
+    overflow-x: auto; /* Scroll horizontal si las columnas no caben */
 }

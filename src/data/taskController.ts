@@ -1,7 +1,7 @@
 import axios from "axios";
-import { ITask } from "../types/ITask";
 import { putTask } from "../http/taskRequest";
 import { IBacklog } from "../types/IBacklog";
+import { ITask } from "../types/ITask";
 
 const apiUrl=import.meta.env.VITE_APIURL
 
@@ -16,6 +16,10 @@ export const getALLTareas=async():Promise<ITask[]|undefined>=>{
 }
 export const crearTarea=async(newTask:ITask)=>{
     try {
+        if(newTask.id == "" ){
+            newTask.id = crypto.randomUUID()
+        }
+
         const tareas=await getALLTareas()
         if(tareas){
             await putTask([...tareas,newTask])
