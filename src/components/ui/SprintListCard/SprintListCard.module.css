@@ -1,0 +1,19 @@
+.mainContainer{
+    width: 90%;
+    height: 20vh;
+    background-color: #27445D;
+    display: flex;
+    flex-direction: column;
+}
+.navButton{
+    background-color: none;
+}
+.mainContainer_sprintInfoContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.mainContainer_buttonContainer{
+    display: flex;
+    flex-direction: row;
+}

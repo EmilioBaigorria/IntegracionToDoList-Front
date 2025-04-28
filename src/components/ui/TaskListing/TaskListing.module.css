@@ -1,0 +1,24 @@
+.mainContainer{
+    gap: 2rem;
+    width: 70vw;
+    height: 100%;
+}
+.contentContainer{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.textButtonContainer{
+    display: flex;
+    flex-direction:row;
+    align-items: center;
+}
+.columsContainer{
+
+    height: 80vh;
+    width: 70vw;
+    gap: 3rem;
+    display: flex;
+    flex-direction: row;
+}

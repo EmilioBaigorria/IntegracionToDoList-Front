@@ -1,0 +1,20 @@
+.mainContainer{
+    width: 20vw;
+    height: 100%;
+    padding: .4rem;
+    background-color: #4B567A;
+    display: flex;
+    flex-direction: column;
+}
+.textContainer{
+    display: flex;
+    flex-direction: column;
+}
+.buttonsContainer{
+    display: flex;
+    flex-direction: column;
+}
+.buttonsContainer_collection{
+    display: flex;
+    flex-direction: row;
+}

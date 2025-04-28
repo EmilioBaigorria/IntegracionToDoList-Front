@@ -1,0 +1,15 @@
+.button{
+    justify-content: space-around;
+    align-items: center;
+    border: .1px solid white;
+    background-color: #27445D;
+
+}
+.button:hover{
+    color: #27445D;
+    border: .1px solid #27445D;
+    background-color: white;
+}
+.button:hover span{
+    color: #27445D;
+}
