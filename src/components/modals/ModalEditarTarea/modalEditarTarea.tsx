@@ -30,8 +30,7 @@ export const ModalEditarTarea: FC<IModalEditarTarea> = ({ isOpen, onClose }) => 
 
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { value, name } = event.target
-        const parsedValue = name === "estado" ? parseInt(value) : value;
-        setEditTarea((prev) => ({ ...prev, [`${name}`]: parsedValue }))
+        setEditTarea((prev) => ({ ...prev, [`${name}`]: value }))
 
         console.log(editTarea)
     }
@@ -75,13 +74,13 @@ export const ModalEditarTarea: FC<IModalEditarTarea> = ({ isOpen, onClose }) => 
                     <div>
                         <p className={styles.fieldTitle}>Estado:</p>
                         <select name="estado" value={editTarea.estado} className={styles.fieldInput} onChange={handleChangeInputs} >
-                            <option value={State.pendiente}>
+                            <option value={"pendiente"}>
                                 Pendiente
                             </option>
-                            <option value={State.activo}>
+                            <option value={"activo"}>
                                 Activo
                             </option>
-                            <option value={State.terminado}>
+                            <option value={"terminado"}>
                                 Terminado
                             </option>
                         </select>

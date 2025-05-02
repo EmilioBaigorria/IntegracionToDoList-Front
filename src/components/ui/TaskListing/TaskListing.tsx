@@ -5,6 +5,7 @@ import { ISprint } from "../../../types/ISprint"
 import { Button } from "../Button/Button"
 import { TaskListColum } from "../TaskListColum/TaskListColum"
 import styles from "./TaskListing.module.css"
+import { State } from "../../../types/ITask"
 
 interface ITaskListing {
     setCrearTareaModal: Function
@@ -51,21 +52,23 @@ export const TaskListing: FC<ITaskListing> = ({ setCrearTareaModal, setEditarTar
                             }} text="Crear Tarea" />
                         </div>
                         <div className={styles.columsContainer}>
+                            {/*Visual studio marca algunos elementos como error, sin embargo estos funcionan sin problema y
+                            no estoy seguro que podria estarlo causando*/}
                             <TaskListColum
                                 setEditarTareaModal={setEditarTareaModal}
                                 setVerTareaModal={setVerTareaModal}
                                 typeText={"Pendiente"}
-                                tasks={sprint.tareas.filter((el) => el.estado == 0)} />
+                                tasks={sprint.tareas.filter((el) => el.estado == State[0])} />
                             <TaskListColum
                                 setEditarTareaModal={setEditarTareaModal}
                                 setVerTareaModal={setVerTareaModal}
                                 typeText={"Activo"}
-                                tasks={sprint.tareas.filter((el) => el.estado == 1)} />
+                                tasks={sprint.tareas.filter((el) => el.estado == State[1])} />
                             <TaskListColum
                                 setEditarTareaModal={setEditarTareaModal}
                                 setVerTareaModal={setVerTareaModal}
                                 typeText={"Terminado"}
-                                tasks={sprint.tareas.filter((el) => el.estado == 2)} />
+                                tasks={sprint.tareas.filter((el) => el.estado == State[2])} />
                         </div>
                     </div>
                 </div> : <p>Cargando...</p>}

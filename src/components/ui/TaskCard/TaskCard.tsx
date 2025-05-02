@@ -39,7 +39,7 @@ export const TaskCard: FC<ITaskCard> = ({ data, setEditTareaModal, setVerTareaMo
     setSelectedSprint(sprintId)
     if (sprintId) {
       await addTaskToSprint(data, sprintId)
-      await eliminarTareaByID(data.id)
+      await eliminarTareaByID(data._id?data._id:"this will never happen")
     }
   }
   const handleDelete = () => {
@@ -54,7 +54,7 @@ export const TaskCard: FC<ITaskCard> = ({ data, setEditTareaModal, setVerTareaMo
       confirmButtonText: "Eliminar"
     }).then((result) => {
       if (result.isConfirmed) {
-        eliminarTareaByID(data.id)
+        eliminarTareaByID(data._id?data._id:"this will never happen")
         Swal.fire({
           title: "¡Eliminado exitosamente!",
           text: "La tarea fue eliminado exitosamente",
@@ -91,7 +91,7 @@ export const TaskCard: FC<ITaskCard> = ({ data, setEditTareaModal, setVerTareaMo
         >
           <option value="">Seleccionar Sprint</option>
           {sprints.map((sprint) => (
-            <option key={sprint.id} value={sprint.id}>
+            <option key={sprint._id} value={sprint._id}>
               {sprint.nombre}
             </option>
           ))}

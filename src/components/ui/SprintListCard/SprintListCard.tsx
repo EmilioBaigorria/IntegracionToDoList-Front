@@ -19,7 +19,7 @@ export const SprintListCard: FC<ISprintListCard> = ({ sprint, setEditarSprintMod
     const setActiveSprint = activeSprintStore(state => state.setActiveSprint)
 
     const handleNavigate = () => {
-        navigate(`/sprints/${sprint.id}`)
+        navigate(`/sprints/${sprint._id}`)
         setActiveSprint(sprint)
     }
     
@@ -35,7 +35,7 @@ export const SprintListCard: FC<ISprintListCard> = ({ sprint, setEditarSprintMod
             cancelButtonText:"Cancelar"
         }).then((result) => {
             if (result.isConfirmed) {
-                eliminarSprintByID(sprint.id)
+                eliminarSprintByID(sprint._id?sprint._id:"this will never happend")
                 Swal.fire({
                     title: "¡Eliminado exitosamente!",
                     text: "El sprint fue eliminado exitosamente",

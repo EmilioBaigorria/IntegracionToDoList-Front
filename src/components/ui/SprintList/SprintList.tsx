@@ -42,7 +42,7 @@ export const SprintList: FC<ISprintLIst> = ({ setCrearSprintModal, setEditarSpri
                 <div className={styles.sprintListContainer}>
                     {sprints.map((sprint) => (
                         <SprintListCard
-                            key={sprint.id}
+                            key={sprint._id}
                             sprint={sprint}
                             setEditarSprintModal={setEditarSprintModal}
                             setVerSprintgModal={setVerSprintModal}

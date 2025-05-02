@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { useParams } from "react-router-dom"
 import Swal from "sweetalert2"
-import { changeTaskStateOnSprint, deleteTaskInSprintById } from "../../../data/sprintController"
+import { addTaskToSprint, changeTaskStateOnSprint, deleteTaskInSprintById } from "../../../data/sprintController"
 import { useTaskStore } from "../../../store/tareaStore"
 import { ITask, State } from "../../../types/ITask"
 import { Button } from "../Button/Button"
@@ -30,7 +30,7 @@ export const ColumTaskCard: FC<IColumTaskCard> = ({ task, setEditarTareaModal, s
             cancelButtonText: "Cancelar"
         }).then((result) => {
             if (result.isConfirmed && sprintId) {
-                deleteTaskInSprintById(task.id, sprintId)
+                deleteTaskInSprintById(task._id?task._id:"this will never happen", sprintId)
                 Swal.fire({
                     title: "¡Eliminado exitosamente!",
                     text: "La tarea fue eliminado exitosamente",
@@ -39,20 +39,22 @@ export const ColumTaskCard: FC<IColumTaskCard> = ({ task, setEditarTareaModal, s
             }
         });
     }
+    {/*Visual studio marca algunos elementos como error, sin embargo estos funcionan sin problema y
+    no estoy seguro que podria estarlo causando*/}
     const handelChangeState = () => {
-        if (task.estado !== State.terminado && sprintId) {
-            changeTaskStateOnSprint(task.estado + 1, task, sprintId)
+        if (task.estado !== State[2] && sprintId) {
+            let newState=task.estado==State[0]? "activo": "terminado"
+            changeTaskStateOnSprint(newState, task, sprintId)
         }
-        if (task.estado == State.terminado && sprintId) {
-            deleteTaskInSprintById(task.id, sprintId)
+        if (task.estado == State[2] && sprintId) {
+            deleteTaskInSprintById(task._id?task._id:"this will never happen", sprintId)
         }
     }
     const handleMoveToBacklog=async ()=>{
         try {
             if(sprintId){
                 const newtask=await crearTarea(task)
-                console.log(newtask)
-                await deleteTaskInSprintById(task.id,sprintId)
+                await deleteTaskInSprintById(task._id?task._id:"this will never happen",sprintId)
             }
         } catch (error) {
             console.log("Ocurrio un error al mover la tarea al backlog",error)
@@ -69,10 +71,12 @@ export const ColumTaskCard: FC<IColumTaskCard> = ({ task, setEditarTareaModal, s
             <div className={styles.buttonsContainer}>
                 <div className={styles.buttonsContainer_collection}>
                     <Button action={handleMoveToBacklog} text="mover a backlog" />
+                    {/*Visual studio marca algunos elementos como error, sin embargo estos funcionan sin problema y
+                    no estoy seguro que podria estarlo causando*/}
                     <Button action={handelChangeState} text={
-                        task.estado == 0 ?
+                        task.estado == State[0] ?
                             "mover a en proceso" :
-                            task.estado == 1 ?
+                            task.estado == State[1] ?
                                 "mover a terminado" :
                                 "Eliminar"
                     } />

@@ -27,14 +27,10 @@ export const ModalCrearTarea: FC<IModalCrearTarea> = ({ isOpen, onClose }) => {
 
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { value, name } = event.target
-        const parsedValue = name === "estado" ? parseInt(value) : value;
-        setNewTarea((prev) => ({ ...prev, [`${name}`]: parsedValue }))
-
-        console.log(newTarea)
+        setNewTarea((prev) => ({ ...prev, [`${name}`]: value }))
     }
 
     const saveNewTarea = async () => {
-
         if (sprintId){
             const newerTask=newTarea
             newerTask.id=crypto.randomUUID()
@@ -70,13 +66,13 @@ export const ModalCrearTarea: FC<IModalCrearTarea> = ({ isOpen, onClose }) => {
                     <div>
                         <p className={styles.fieldTitle}>Estado:</p>
                         <select name="estado" value={newTarea.estado} className={styles.fieldInput} onChange={handleChangeInputs} >
-                            <option value={State.pendiente}>
+                            <option value={"pendiente"}>
                                 Pendiente
                             </option>
-                            <option value={State.activo}>
+                            <option value={"activo"}>
                                 Activo
                             </option>
-                            <option value={State.terminado}>
+                            <option value={"terminado"}>
                                 Terminado
                             </option>
                         </select>

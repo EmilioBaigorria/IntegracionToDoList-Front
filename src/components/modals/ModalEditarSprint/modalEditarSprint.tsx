@@ -28,16 +28,9 @@ const initialValuesSprint = {
 
 export const ModalEditarSprint: FC<IModalEditarSprint> = ({ isOpen, onClose }) => {
 
-    const sprintActivo = activeSprintStore(state=>state.activeSprint)
+    const sprintActivo = activeSprintStore(state => state.activeSprint)
 
     const [editedSprint, setEditedSprint] = useState<ISprint>(sprintActivo ?? initialValuesSprint)
-    const [tareas, setTareas] = useState<ITask[]>([])
-    const [selectedOptions, setSelectedOptions] = useState<MultiValue<OptionType>>([]);
-
-    const getTasks = async () => {
-        const tasks: ITask[] = await getALLTareas() ?? []
-        setTareas(tasks)
-    }
 
     const handleChangeInputs = (event: ChangeEvent<HTMLInputElement>) => {
         const { value, name } = event.target
@@ -48,33 +41,18 @@ export const ModalEditarSprint: FC<IModalEditarSprint> = ({ isOpen, onClose }) =
         await actualizarSprint(editedSprint)
         onClose()
         setEditedSprint(initialValuesSprint)
-        setSelectedOptions([]);
     }
 
     useEffect(() => {
-        getTasks()
-        if (isOpen && sprintActivo){
+        if (isOpen && sprintActivo) {
             setEditedSprint(sprintActivo)
-            
-            const opcionesSeleccionadas = sprintActivo.tareas.map(t => ({
-                value: t.id,
-                label: t.titulo
-            }));
-        
-            setSelectedOptions(opcionesSeleccionadas);
         }
     }, [isOpen, sprintActivo])
 
     const handleCloseModal = () => {
         setEditedSprint(initialValuesSprint)
-        setSelectedOptions([]);
         onClose()
     }
-
-    const selectOptions = tareas.map(t => ({
-        value: t.id,
-        label: t.titulo
-    }));
 
     return (
         <div style={{ display: isOpen ? "" : "none" }} className={styles.background} onClick={handleCloseModal}>
@@ -94,90 +72,6 @@ export const ModalEditarSprint: FC<IModalEditarSprint> = ({ isOpen, onClose }) =
                         <div>
                             <p className={styles.fieldTitle}>Fecha cierre:</p>
                             <input type="date" name="fechaCierre" value={editedSprint.fechaCierre} className={styles.fieldInput} onChange={handleChangeInputs} />
-                        </div>
-                        <div>
-                            <p className={styles.fieldTitle}>Listado tareas:</p>
-                            <Select
-                                options={selectOptions}
-                                isMulti
-                                value={selectedOptions}
-                                onChange={(selected) => {
-                                    setSelectedOptions(selected);
-                                    const tareasSeleccionadas = tareas.filter(t =>
-                                        selected.some(option => option.value === t.id)
-                                    );
-                                    setEditedSprint(prev => ({
-                                        ...prev,
-                                        tareas: tareasSeleccionadas
-                                    }));
-                                }}
-                                styles={{
-                                    control: (provided, state) => ({
-                                        ...provided,
-                                        backgroundColor: '#2b2b2b',
-                                        border: state.isFocused ? '1px solid #888' : '1px solid #444',
-                                        borderRadius: '0.2rem',
-                                        boxShadow: 'none',
-                                        color: 'white',
-                                        minHeight: '38px',
-                                    }),
-                                    menu: (provided) => ({
-                                        ...provided,
-                                        backgroundColor: '#1b1b1b',
-                                        border: '1px solid #444',
-                                        borderRadius: '0.2rem',
-                                        zIndex: 9999,
-                                    }),
-                                    option: (provided, state) => ({
-                                        ...provided,
-                                        backgroundColor: state.isFocused
-                                            ? '#333'
-                                            : state.isSelected
-                                                ? '#364875' // celeste pastel apagado
-                                                : '#1b1b1b',
-                                        color: state.isSelected ? '#ffffff' : '#e0e0e0',
-                                        cursor: 'pointer',
-                                    }),
-                                    multiValue: (provided) => ({
-                                        ...provided,
-                                        backgroundColor: '#364875', // celeste pastel apagado
-                                    }),
-                                    multiValueLabel: (provided) => ({
-                                        ...provided,
-                                        color: '#fff',
-                                    }),
-                                    multiValueRemove: (provided) => ({
-                                        ...provided,
-                                        color: '#fff',
-                                        ':hover': {
-                                            backgroundColor: '#4a7a91',
-                                            color: '#fff',
-                                        },
-                                    }),
-                                    input: (provided) => ({
-                                        ...provided,
-                                        color: 'white',
-                                    }),
-                                    singleValue: (provided) => ({
-                                        ...provided,
-                                        color: 'white',
-                                    }),
-                                    placeholder: (provided) => ({
-                                        ...provided,
-                                        color: '#aaa',
-                                    }),
-                                }}
-                                theme={(theme) => ({
-                                    ...theme,
-                                    colors: {
-                                        ...theme.colors,
-                                        primary25: '#333',
-                                        primary: '#6c9db7',
-                                    },
-                                })}
-                            />
-
-
                         </div>
                     </div>
                     <div className={styles.fieldButtons}>

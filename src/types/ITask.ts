@@ -5,6 +5,7 @@ export enum State{
 }
 
 export interface ITask{
+    _id?:string,
     id: string,
     titulo:string,
     descripcion:string,

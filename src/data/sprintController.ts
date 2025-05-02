@@ -9,8 +9,8 @@ const apiUrl = import.meta.env.VITE_APIURL
 
 export const getALLSprints = async (): Promise<ISprint[] | undefined> => {
     try {
-        const response = await axios.get<ISprintList>(`${apiUrl}/sprintList`)
-        return response.data.sprints
+        const response = await axios.get<ISprint[]>(`${apiUrl}/sprints`)
+        return response.data
 
     } catch (error) {
         console.log("Ocurrio un error durante la obtencion de todos los sprints", error)
@@ -18,12 +18,9 @@ export const getALLSprints = async (): Promise<ISprint[] | undefined> => {
 }
 export const getSprintById = async (sprintId: String): Promise<ISprint | undefined> => {
     try {
-        const sprints = await getALLSprints()
-        if (sprints) {
-            const newSprintList = sprints.filter((el) =>
-                el.id == sprintId
-            )
-            return newSprintList[0]
+        const response = await axios.get<ISprint>(`${apiUrl}/sprints/byId/${sprintId}`)
+        if (response) {
+            return response.data
         }
     } catch (error) {
         console.log("Ocurrio un error durante la obtencion del sprint de id", sprintId, error)
@@ -31,42 +28,31 @@ export const getSprintById = async (sprintId: String): Promise<ISprint | undefin
 }
 export const crearSprint = async (newSprint: ISprint) => {
     try {
-        newSprint.id = crypto.randomUUID()
-        const sprints = await getALLSprints()
-        if (sprints) {
-            await putSprint([...sprints, newSprint])
-        } else {
-            await putSprint([newSprint])
+        const response = await axios.post<ISprint>(`${apiUrl}/sprints`,newSprint)
+        if(response){
+            return response.data
         }
-        return newSprint
+        return "Ocurrio un error"
     } catch (error) {
         console.log("Ocurrio un error durante la creacion de un nuevo sprint", error)
     }
 }
 export const eliminarSprintByID = async (sprintId: String) => {
     try {
-        const sprints = await getALLSprints()
-        if (sprints) {
-            const newSprintList = sprints.filter((el) =>
-                el.id !== sprintId
-            )
-
-            await putSprint(newSprintList)
-            return newSprintList
+        const response = await axios.delete<ISprint>(`${apiUrl}/sprints/deleteById/${sprintId}`)
+        if (response) {
+            return response.data
         }
+        return "Ocurrio un error"
     } catch (error) {
         console.log("Ocurrio un error durante la eliminacion de un sprint", error)
     }
 }
 export const actualizarSprint = async (sprintActualizado: ISprint) => {
     try {
-        const sprints = await getALLSprints()
-        if (sprints) {
-            const newSprintList = sprints.map((sprint) =>
-                sprint.id == sprintActualizado.id ? { ...sprint, ...sprintActualizado } : sprint
-            )
-            await putSprint(newSprintList)
-            return newSprintList
+        const response = await axios.put<ISprint>(`${apiUrl}/sprints/updateById/${sprintActualizado._id}`,sprintActualizado)
+        if (response) {
+            return response.data
         }
         return null
 
@@ -77,10 +63,9 @@ export const actualizarSprint = async (sprintActualizado: ISprint) => {
 }
 export const addTaskToSprint = async (newTask: ITask, sprintId: String) => {
     try {
-        const sprint = await getSprintById(sprintId)
-        if (sprint) {
-            sprint.tareas.push(newTask)
-            return await actualizarSprint(sprint)
+        const response = await axios.put<ISprint>(`${apiUrl}/sprints/${sprintId}/addTask/${newTask._id}`,newTask)
+        if (response) {
+            return response.data
         }
         return null
     } catch (error) {
@@ -89,13 +74,9 @@ export const addTaskToSprint = async (newTask: ITask, sprintId: String) => {
 }
 export const updateTaskOnSprint = async (updatedTask: ITask, sprintId: String) => {
     try {
-        const sprint = await getSprintById(sprintId)
-        if (sprint) {
-            const updatedTaskList = sprint.tareas.map((task) =>
-                task.id == updatedTask.id ? { ...task, ...updatedTask } : task
-            )
-            sprint.tareas = updatedTaskList
-            return await actualizarSprint(sprint)
+        const response = await axios.put<ITask>(`${apiUrl}/task/updateById/${updatedTask._id}`,updatedTask)
+        if (response) {
+            return response.data
         }
         return null
     } catch (error) {
@@ -104,13 +85,9 @@ export const updateTaskOnSprint = async (updatedTask: ITask, sprintId: String) =
 }
 export const deleteTaskInSprintById = async (taskId: String, sprintId: String) => {
     try {
-        const sprint = await getSprintById(sprintId)
-        if (sprint) {
-            const updatedTaskList = sprint.tareas.filter((el) =>
-                el.id !== taskId
-            )
-            sprint.tareas = updatedTaskList
-            return await actualizarSprint(sprint)
+        const response = await axios.delete<ISprint>(`${apiUrl}/sprints/${sprintId}/deleteTask/${taskId}`)
+        if (response) {
+            return response.data
         }
         return null
     } catch (error) {
@@ -118,19 +95,15 @@ export const deleteTaskInSprintById = async (taskId: String, sprintId: String) =
     }
 }
 //Me di cuenta que esta funcion es redundante, updateTaskOnSprint hace lo mismo, la voy a dejar solo porque puede ser conveniente
-export const changeTaskStateOnSprint = async (newState: State, taskToChange: ITask, sprintId: String) => {
+export const changeTaskStateOnSprint = async (newState: string, taskToChange: ITask, sprintId: String) => {
     try {
-        const sprint = await getSprintById(sprintId)
-        if (sprint) {
-            taskToChange.estado = newState
-            const newTaskList = sprint.tareas.map((task) =>
-                task.id == taskToChange.id ? { ...task, ...taskToChange } : task
-            )
-            sprint.tareas = newTaskList
-            return await actualizarSprint(sprint)
+        console.log(`${apiUrl}/sprints/changeTaskState/${taskToChange._id}/${newState}`)
+        const response = await axios.put<ITask>(`${apiUrl}/sprints/changeTaskState/${taskToChange._id}/${newState}`,taskToChange)
+        if (response) {
+            return response.data
         }
         return null
     } catch (error) {
-        console.log("Ocurrio un error durante el añadido de una nueva tarea al sprint de id:", sprintId, error)
+        console.log("Ocurrio un error durante el cambio de estado de una tarea:", error)
     }
 }

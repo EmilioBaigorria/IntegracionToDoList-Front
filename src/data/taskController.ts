@@ -7,40 +7,34 @@ const apiUrl=import.meta.env.VITE_APIURL
 
 export const getALLTareas=async():Promise<ITask[]|undefined>=>{
     try {
-        const response =await axios.get<IBacklog>(`${apiUrl}/backlog`)
-        return response.data.tareas
-        
+        const response =await axios.get(`${apiUrl}/backlog`)
+        return response.data[0].tareas
     } catch (error) {
         console.log("Ocurrio un error durante la obtencion de todas las tareas",error)
     }
 }
 export const crearTarea=async(newTask:ITask)=>{
     try {
-        if(newTask.id == "" ){
-            newTask.id = crypto.randomUUID()
-        }
-
-        const tareas=await getALLTareas()
-        if(tareas){
-            await putTask([...tareas,newTask])
+        let response
+        if(!newTask._id){
+            response =await axios.post(`${apiUrl}/task`,newTask)
         }else{
-            await putTask([newTask])
+            response=await axios.get(`${apiUrl}/task/byId/${newTask._id}`)
         }
-        return newTask
+        
+        const backlogResponse=await axios.put(`${apiUrl}/backlog/addTask/${response.data._id}`,response.data)
+        if(response && backlogResponse){
+            return response.data
+        }
     } catch (error) {
         console.log("Ocurrio un error durante la creacion de una nueva tarea",error)
     }
 }
 export const eliminarTareaByID=async(taskId:string)=>{
     try {
-        const tareas=await getALLTareas()
-        if(tareas){
-            const newBacklog=tareas.filter((el)=>
-                el.id!==taskId
-            )
-            
-            await putTask(newBacklog)
-            return newBacklog
+        const response =await axios.delete<IBacklog>(`${apiUrl}/backlog/deleteTask/${taskId}`)
+        if(response){
+            return response.data
         } 
     } catch (error) {
         console.log("Ocurrio un error durante la eliminacion de una tarea",error)
@@ -49,13 +43,9 @@ export const eliminarTareaByID=async(taskId:string)=>{
 
 export const actualizarTarea=async(tareaActualizada:ITask)=>{
     try {
-        const tareas=await getALLTareas()
-        if(tareas){
-            const newBacklog=tareas.map((tarea)=>
-                tarea.id==tareaActualizada.id ? {...tarea,...tareaActualizada}: tarea
-            )
-            await putTask(newBacklog)
-            return newBacklog
+        const response =await axios.put<ITask>(`${apiUrl}/task/updateById/${tareaActualizada._id}`,tareaActualizada)
+        if(response){
+            return response.data
         }else{
             return null
         }
